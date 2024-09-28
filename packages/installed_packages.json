@@ -1,0 +1,30 @@
+[
+  {
+    "name": "yama",
+    "version": "1.0",
+    "dependencies": [
+      "libfoo"
+    ],
+    "url": "https://v8v88v8v88.com/yama-1.0.zip"
+  },
+  {
+    "name": "libfoo",
+    "version": "1.2",
+    "dependencies": [
+      "libbar"
+    ],
+    "url": "https://v8v88v8v88.com/libfoo-1.2.zip"
+  },
+  {
+    "name": "libbar",
+    "version": "2.0",
+    "dependencies": [],
+    "url": "https://v8v88v8v88.com/libbar-2.0.zip"
+  },
+  {
+    "name": "hizdu",
+    "version": "2.0",
+    "dependencies": [],
+    "url": "https://v8v88v8v88.com/hizdu-2.0.zip"
+  }
+]
