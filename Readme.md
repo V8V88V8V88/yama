@@ -8,6 +8,36 @@ Yama is a lightweight package manager designed for performance and safety. Built
 - **Download and Extraction:** Downloads packages from specified URLs and extracts them for use.
 - **Dependency Resolution:** Automatically resolves and installs dependencies for the specified packages. (Working on it)
 
+## Project Structure
+
+```mermaid
+graph TD
+    A[yama] --> B[Cargo.lock]
+    A --> C[Cargo.toml]
+    A --> D[c_src]
+    A --> E[include]
+    A --> F[libfile_manager.a]
+    A --> G[Makefile]
+    A --> H[packages]
+    A --> I[Readme.md]
+    A --> J[src]
+
+    D --> D1[file_manager.c]
+    D --> D2[file_manager.o]
+
+    E --> E1[file_manager.h]
+
+    H --> H1[installed_packages.json]
+
+    J --> J1[lib.rs]
+    J --> J2[main.rs]
+
+    style A fill:#f9f,stroke:#333,stroke-width:4px
+    style D fill:#bbf,stroke:#333,stroke-width:2px
+    style E fill:#bbf,stroke:#333,stroke-width:2px
+    style H fill:#bbf,stroke:#333,stroke-width:2px
+    style J fill:#bbf,stroke:#333,stroke-width:2px
+```
 
 ## Dependencies
 
@@ -17,11 +47,11 @@ Before running Yama, ensure you have the following dependencies installed:
 - **Cargo**: The Rust package manager comes with Rust installation.
 - **C Compiler**: Make sure you have a C compiler (like `gcc` or `clang`) installed for building C components.
 - **libzip**: Required for handling zip files. You can usually install it via your package manager:
-  - For Ubuntu/Debian:
+  - For Ubuntu/Debian: 
     ```bash
     sudo apt-get install libzip-dev
     ```
-  - For Fedora:
+  - For Fedora: 
     ```bash
     sudo dnf install libzip-devel
     ```
