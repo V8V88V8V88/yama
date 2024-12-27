@@ -18,7 +18,7 @@ enum Commands {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let cli = Cli::parse();
-
+    log::info!("Yama Package Manager started");
     let install_dir = PathBuf::from("./packages");
     std::fs::create_dir_all(&install_dir)?;
 
