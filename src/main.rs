@@ -26,46 +26,63 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     pm.load_installed_packages()?;
 
-    pm.add_package(Package {
-        name: "yama".to_string(),
-        version: "1.0".to_string(),
-        dependencies: vec!["libfoo".to_string()],
-        url: "https://example.com/yama-1.0.zip".to_string(),
-    });
+    // Consider loading these packages from a config file or arguments
+    add_initial_packages(&mut pm)?;
 
-    pm.add_package(Package {
-        name: "libfoo".to_string(),
-        version: "1.2".to_string(),
-        dependencies: vec!["libbar".to_string()],
-        url: "https://example.com/libfoo-1.2.zip".to_string(),
-    });
+    if let Some(command) = cli.command {
+        execute_command(command, &mut pm)?;
+    } else {
+        println!("No command specified. Use --help for usage information.");
+    }
 
-    pm.add_package(Package {
-        name: "libbar".to_string(),
-        version: "2.0".to_string(),
-        dependencies: vec![],
-        url: "https://example.com/libbar-2.0.zip".to_string(),
-    });
+    Ok(())
+}
 
-    match &cli.command {
-        Some(Commands::Install { name }) => {
+fn add_initial_packages(pm: &mut PackageManager) -> Result<(), Box<dyn std::error::Error>> {
+    let initial_packages = vec![
+        Package {
+            name: "yama".to_string(),
+            version: "1.0".to_string(),
+            dependencies: vec!["libfoo".to_string()],
+            url: "https://example.com/yama-1.0.zip".to_string(),
+        },
+        Package {
+            name: "libfoo".to_string(),
+            version: "1.2".to_string(),
+            dependencies: vec!["libbar".to_string()],
+            url: "https://example.com/libfoo-1.2.zip".to_string(),
+        },
+        Package {
+            name: "libbar".to_string(),
+            version: "2.0".to_string(),
+            dependencies: vec![],
+            url: "https://example.com/libbar-2.0.zip".to_string(),
+        },
+    ];
+
+    for package in initial_packages {
+        pm.add_package(package);
+    }
+
+    Ok(())
+}
+
+fn execute_command(command: Commands, pm: &mut PackageManager) -> Result<(), Box<dyn std::error::Error>> {
+    match command {
+        Commands::Install { name } => {
             println!("Installing package: {}", name);
-            pm.install_package(name)?;
+            pm.install_package(&name).map_err(|e| format!("Failed to install package: {}", e))?;
         }
-        Some(Commands::Remove { name }) => {
+        Commands::Remove { name } => {
             println!("Removing package: {}", name);
-            pm.remove_package(name)?;
+            pm.remove_package(&name).map_err(|e| format!("Failed to remove package: {}", e))?;
         }
-        Some(Commands::List) => {
+        Commands::List => {
             println!("Installed packages:");
             for package in pm.list_installed_packages() {
                 println!("- {}", package);
             }
         }
-        None => {
-            println!("No command specified. Use --help for usage information.");
-        }
     }
-
     Ok(())
 }
