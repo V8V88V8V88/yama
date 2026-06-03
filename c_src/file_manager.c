@@ -1,11 +1,10 @@
-
 #include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
 
-void download_package(const char* url, const char* destination) {
-    printf("Downloading package from %s to %s\n", url, destination);
+int download_package_ffi(const char* url, const char* destination) {
+    return 0;
 }
 
-void extract_package(const char* package, const char* destination) {
-    printf("Extracting %s to %s\n", package, destination);
+int verify_checksum_ffi(const char* file_path, const char* expected_checksum) {
+    return 0;
 }
